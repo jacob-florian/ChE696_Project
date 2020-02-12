@@ -6,18 +6,74 @@ import heatmap
 #Read data into dataframe
 DF = pd.read_csv('AB_data.csv', index_col=0)
 DF = DF.loc[:, ~DF.columns.str.contains('^Unnamed')]
-columns = ['Number', 'Compound', 'Element1', 'Element2', 'Class', r'Pauling $χ_1-χ_2$', r'Martynov $χ_1-χ_2$', r'Gordy $χ_1-χ_2$', r'Mulliken $χ_1-χ_2$', r'Allred $χ_1-χ_2$', r'Pauling $χ_{avg}$', r'Martynov $χ_{avg}$', r'Gordy $χ_{avg}$', r'Mulliken $χ_{avg}$', r'Allred $χ_{avg}$', 'Pauling Ionic Character', 'Martynov Ionic Character', 'Gordy Ionic Character', 'Mulliken Ionic Character', 'Allred Ionic Character', 'Sum of Valence Electrons', 'Avg Number of Electrons', 'Atomic Number Sum', 'Atomic Number Difference', 'Avg Atomic Number','Atomic Weight Difference','Avg Atomic Weight','Atomic Weight Sum','D24','D25','D26','D27','D28','D29','D30','D31','D32','D33','D34','D35','D36','D37','D38','D39','D40','D41','D42','D43','D44','D45','D46','D47','D48','D49','D50','D51','D52','D53','D54','D55']
 
-DF.columns = columns
-
-corr = DF.iloc[:, [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55]].corr()
-
-print(DF.tail())
+print(DF.tail(20))
 
 #Plot Heatmap for some features
+corr = DF.iloc[:, [5, 25, 30, 35]].corr()
 plt.figure(figsize=(10, 10))
 heatmap.corrplot(corr)
 
-plt.show()
+#Define features and target
+X = DF.iloc[:, [5, 25]]
+y = DF.iloc[:, 3]
 
+#30/70 Test/Train stratified split
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.30, random_state=20, stratify=y)
+
+#Standardize Features
+from sklearn.preprocessing import StandardScaler
+sc = StandardScaler()
+sc.fit(X_train)
+X_train_std = sc.transform(X_train)
+X_test_std = sc.transform(X_test)
+
+#Logistic Regression Model
+from sklearn.linear_model import LogisticRegression
+from sklearn.neighbors import KNeighborsClassifier
+lr = KNeighborsClassifier(n_neighbors=10)
+lr.fit(X_train_std, y_train)
+y_pred = lr.predict(X_test_std)
+
+from sklearn.metrics import classification_report
+print(classification_report(y_test, y_pred))
+
+############Visualize Model Performance############
+
+#Function definitions
+def make_meshgrid(x, y, h=.02):
+    x_min, x_max = x.min() - 1, x.max() + 1
+    y_min, y_max = y.min() - 1, y.max() + 1
+    xx, yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))
+    return xx, yy
+
+# Set-up grid for plotting.
+X0, X1 = X_train_std[:, 0], X_train_std[:, 1]
+X2, X3 = X_test_std[:, 0], X_test_std[:, 1]
+xx, yy = make_meshgrid(X0, X1)
+
+fig, ax = plt.subplots(figsize=(12,12))
+# Plot the decision boundary. For that, we will assign a color to each
+Z = lr.predict(np.c_[xx.ravel(), yy.ravel()])
+
+# Put the result into a color plot
+Z = Z.reshape(xx.shape)
+plt.contourf(xx, yy, Z, cmap=plt.cm.Paired)
+
+# Plot training points
+train = ax.scatter(X0, X1, c=y_train, cmap=plt.cm.Paired, s=30, edgecolor='k', label='training points')
+
+# Plot test points
+test = ax.scatter(X2, X3, c=y_test, cmap=plt.cm.Paired, s=30, edgecolor='w', label='test points')
+
+ax.legend()
+ax.set_ylabel('F2 [standardized]')
+ax.set_xlabel('F1 [standardized]')
+ax.set_xticks(())
+ax.set_yticks(())
+
+
+plt.savefig('2D_Model.png', dpi=300)
+plt.show()
 
