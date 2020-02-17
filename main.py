@@ -10,12 +10,12 @@ DF = DF.loc[:, ~DF.columns.str.contains('^Unnamed')]
 print(DF.tail(20))
 
 #Plot Heatmap for some features
-corr = DF.iloc[:, [5, 25, 30, 35]].corr()
-plt.figure(figsize=(10, 10))
-heatmap.corrplot(corr)
+#corr = DF.iloc[:, [5, 25, 30, 35]].corr()
+#plt.figure(figsize=(10, 10))
+#heatmap.corrplot(corr)
 
 #Define features and target
-X = DF.iloc[:, [5, 25]]
+X = DF.iloc[:, list(range(5, 55))]
 y = DF.iloc[:, 3]
 
 #30/70 Test/Train stratified split
@@ -29,15 +29,23 @@ sc.fit(X_train)
 X_train_std = sc.transform(X_train)
 X_test_std = sc.transform(X_test)
 
-#Logistic Regression Model
-from sklearn.linear_model import LogisticRegression
-from sklearn.neighbors import KNeighborsClassifier
-lr = KNeighborsClassifier(n_neighbors=10)
-lr.fit(X_train_std, y_train)
-y_pred = lr.predict(X_test_std)
 
-from sklearn.metrics import classification_report
-print(classification_report(y_test, y_pred))
+from sklearn.decomposition import PCA
+pca = PCA()
+X_train_pca = pca.fit_transform(X_train_std)
+print(pca.explained_variance_ratio_)
+
+pca = PCA(n_components=2)
+X_train_pca = pca.fit_transform(X_train_std)
+X_test_pca = pca.fit_transform(X_test_std)
+
+plt.scatter(X_train_pca[:, 0], X_train_pca[:, 1], c=y_train, cmap=plt.cm.Paired)
+plt.xlabel('PC1')
+plt.ylabel('PC2')
+
+from sklearn.linear_model import LogisticRegression
+lr = LogisticRegression()
+lr = lr.fit(X_train_pca, y_train)
 
 ############Visualize Model Performance############
 
@@ -49,8 +57,8 @@ def make_meshgrid(x, y, h=.02):
     return xx, yy
 
 # Set-up grid for plotting.
-X0, X1 = X_train_std[:, 0], X_train_std[:, 1]
-X2, X3 = X_test_std[:, 0], X_test_std[:, 1]
+X0, X1 = X_train_pca[:, 0], X_train_pca[:, 1]
+X2, X3 = X_test_pca[:, 0], X_test_pca[:, 1]
 xx, yy = make_meshgrid(X0, X1)
 
 fig, ax = plt.subplots(figsize=(12,12))
