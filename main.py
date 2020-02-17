@@ -29,23 +29,40 @@ sc.fit(X_train)
 X_train_std = sc.transform(X_train)
 X_test_std = sc.transform(X_test)
 
+#Linear Discriminant Analysis
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
+lda = LDA(n_components=2)
+X_train_lda = lda.fit_transform(X_train_std, y_train)
+X_test_lda = lda.fit_transform(X_test_std, y_test)
 
-from sklearn.decomposition import PCA
-pca = PCA()
-X_train_pca = pca.fit_transform(X_train_std)
-print(pca.explained_variance_ratio_)
+#Princinple Component Analysis
+#from sklearn.decomposition import PCA
+#pca = PCA()
+#X_train_pca = pca.fit_transform(X_train_std)
+#print(pca.explained_variance_ratio_)
 
-pca = PCA(n_components=2)
-X_train_pca = pca.fit_transform(X_train_std)
-X_test_pca = pca.fit_transform(X_test_std)
+#pca = PCA(n_components=2)
+#X_train_pca = pca.fit_transform(X_train_std)
+#X_test_pca = pca.fit_transform(X_test_std)
 
-plt.scatter(X_train_pca[:, 0], X_train_pca[:, 1], c=y_train, cmap=plt.cm.Paired)
-plt.xlabel('PC1')
-plt.ylabel('PC2')
+#Plot 2-D PCA
+#plt.scatter(X_train_pca[:, 0], X_train_pca[:, 1], c=y_train, cmap=plt.cm.Paired)
+#plt.xlabel('PC1')
+#plt.ylabel('PC2')
 
+#Train Linear Regression Model
 from sklearn.linear_model import LogisticRegression
 lr = LogisticRegression()
-lr = lr.fit(X_train_pca, y_train)
+#lr = lr.fit(X_train_pca, y_train)
+
+#Classification Report
+from sklearn.metrics import classification_report
+#y_pred = lr.predict(X_train_pca)
+#print(classification_report(y_train, y_pred))
+
+lr = lr.fit(X_train_lda, y_train)
+y_pred = lr.predict(X_train_lda)
+print(classification_report(y_train, y_pred))
 
 ############Visualize Model Performance############
 
@@ -57,8 +74,8 @@ def make_meshgrid(x, y, h=.02):
     return xx, yy
 
 # Set-up grid for plotting.
-X0, X1 = X_train_pca[:, 0], X_train_pca[:, 1]
-X2, X3 = X_test_pca[:, 0], X_test_pca[:, 1]
+X0, X1 = X_train_lda[:, 0], X_train_lda[:, 1]
+X2, X3 = X_test_lda[:, 0], X_test_lda[:, 1]
 xx, yy = make_meshgrid(X0, X1)
 
 fig, ax = plt.subplots(figsize=(12,12))
