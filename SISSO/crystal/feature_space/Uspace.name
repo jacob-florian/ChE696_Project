@@ -1,0 +1,40 @@
+((Sum_of_VE)^2*(Mean_Atom#/Pauling_EN))  N=     0  S=  -5679.1608
+((Sum_of_VE*Mean_Atom#)*(Sum_of_VE+Mean_Atom#))  N=     0  S=  -5532.0000
+((Mean_Atom#)^3/exp(Pauling_EN))  N=     0  S=  -5058.2250
+((Sum_of_VE)^3*sqrt(Mean_Atom#))  N=     0  S=  -4656.8539
+((Mean_Atom#)^2*(Pauling_EN-Sum_of_VE))  N=     0  S=  -4071.6500
+((Sum_of_VE*Mean_Atom#)*(Mean_Atom#-Pauling_EN))  N=     0  S=  -3919.4000
+(Sum_of_VE*(Mean_Atom#)^2)  N=     0  S=  -3886.0000
+((Sum_of_VE*Mean_Atom#)*(Mean_Atom#+Pauling_EN))  N=     0  S=  -3852.6000
+((Mean_Atom#)^2*(Sum_of_VE+Pauling_EN))  N=     0  S=  -3700.3500
+((Mean_Atom#)^2*(Mean_Atom#-Sum_of_VE))  N=     0  S=  -3465.0000
+((Sum_of_VE)^3*sqrt(Sum_of_VE))  N=     0  S=  -2804.2109
+((Sum_of_VE)^3*log(Mean_Atom#))  N=     0  S=  -2523.9227
+((Sum_of_VE)^3/(Pauling_EN)^2)  N=     0  S=  -2406.2030
+((Sum_of_VE)^3*cbrt(Mean_Atom#))  N=     0  S=  -2392.4714
+((Sum_of_VE)^2*(Sum_of_VE+Mean_Atom#))  N=     0  S=  -2277.0000
+((Mean_Atom#-Sum_of_VE)*(Sum_of_VE*Mean_Atom#))  N=     0  S=  -2240.0000
+((Sum_of_VE)^3/Pauling_EN)  N=     0  S=  -1914.8252
+((Sum_of_VE)^3*log(Sum_of_VE))  N=     0  S=  -1898.0961
+((Mean_Atom#)^3/cbrt(Sum_of_VE))  N=     0  S=  -1870.8857
+((Mean_Atom#)^3/cbrt(Mean_Atom#))  N=     0  S=  -1779.5858
+(Mean_Atom#/(Mean_Atom#+Pauling_EN))  N=     0
+((Mean_Atom#-Pauling_EN)/Mean_Atom#)  N=     0
+((Mean_Atom#+Pauling_EN)/Mean_Atom#)  N=     0
+exp((Mean_Atom#)^-1)  N=     0
+exp((Pauling_EN/Mean_Atom#))  N=     0
+(Mean_Atom#/(Mean_Atom#-Pauling_EN))  N=     0
+((Mean_Atom#-Pauling_EN)/(Mean_Atom#+Pauling_EN))  N=     0
+(Sum_of_VE/(Sum_of_VE+Pauling_EN))  N=     0
+((Pauling_EN-Sum_of_VE)/Sum_of_VE)  N=     0
+((Mean_Atom#+Pauling_EN)/(Mean_Atom#-Pauling_EN))  N=     0
+(log(Sum_of_VE)/cbrt(Sum_of_VE))  N=     0
+((Sum_of_VE+Pauling_EN)/Sum_of_VE)  N=     0
+exp((Pauling_EN/Sum_of_VE))  N=     0
+(Sum_of_VE/(Pauling_EN-Sum_of_VE))  N=     0
+(cbrt(Mean_Atom#)/log(Mean_Atom#))  N=     0
+(cbrt(Sum_of_VE)/log(Sum_of_VE))  N=     0
+(log(Mean_Atom#)/cbrt(Mean_Atom#))  N=     0
+cbrt(log(Mean_Atom#))  N=     0
+((Pauling_EN-Sum_of_VE)/(Sum_of_VE+Pauling_EN))  N=     0
+cbrt(cbrt(Mean_Atom#))  N=     0

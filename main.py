@@ -9,6 +9,17 @@ DF = DF.loc[:, ~DF.columns.str.contains('^Unnamed')]
 
 print(DF.tail(20))
 
+DF = DF.drop(columns=['Element1', 'Element2'])
+DF = DF.sort_values(by='Class')
+DF["name"] = DF["compound"] + '_group' + DF["Class"].astype(str)
+DF = DF[['name', 'Pauling EN', 'Sum of Valence e-', 'Mean atomic number', 'Mean atomic radius', 'Atomic radius ratio', 'Group Number difference', 'Quantum number difference']]
+
+print(DF.tail(20))
+DF.to_csv('np.txt', sep=' ', index=False, header=True)
+
+
+'''
+
 #Plot Heatmap for some features
 #corr = DF.iloc[:, [5, 25, 30, 35]].corr()
 #plt.figure(figsize=(10, 10))
@@ -101,4 +112,4 @@ ax.set_yticks(())
 
 plt.savefig('2D_Model.png', dpi=300)
 plt.show()
-
+'''
