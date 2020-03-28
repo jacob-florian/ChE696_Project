@@ -11,20 +11,21 @@ print(DF.tail(20))
 
 DF = DF.drop(columns=['Element1', 'Element2'])
 DF = DF.sort_values(by='Class')
-DF["name"] = DF["compound"] + '_group' + DF["Class"].astype(str)
-DF = DF[['name', 'Pauling EN', 'Sum of Valence e-', 'Mean atomic number', 'Mean atomic radius', 'Atomic radius ratio', 'Group Number difference', 'Quantum number difference']]
+#DF["name"] = DF["compound"] + '_group' + DF["Class"].astype(str)
+#DF = DF[['name', 'Pauling EN', 'Sum of Valence e-', 'Mean atomic number', 'Mean atomic radius', 'Atomic radius ratio', 'Group Number difference', 'Quantum number difference']]
 
-print(DF.tail(20))
-DF.to_csv('np.txt', sep=' ', index=False, header=True)
+#print(DF.tail(20))
+#DF.to_csv('np.txt', sep=' ', index=False, header=True)
 
-
-'''
 
 #Plot Heatmap for some features
-#corr = DF.iloc[:, [5, 25, 30, 35]].corr()
-#plt.figure(figsize=(10, 10))
-#heatmap.corrplot(corr)
+corr = DF.iloc[:, np.arange(3, 58, 1)].corr()
+plt.figure(figsize=(30, 30))
+heatmap.corrplot(corr)
+plt.savefig('pairplot.png', dpi=400)
+plt.show()
 
+'''
 #Define features and target
 X = DF.iloc[:, list(range(5, 55))]
 y = DF.iloc[:, 3]
