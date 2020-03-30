@@ -32,16 +32,20 @@ for subplot, pca, title in ((133, sigmoid, "Sigmoid kernel"), (132, rbf, "RBF ke
     
 plt.show()
 
-from sklearn.svm import LinearSVC
+from sklearn.svm import LinearSVC, NuSVC, SVC
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 
 # trained on linear kernel
 X_train, X_test, y_train, y_test = train_test_split(X_reduced, y, test_size=0.20)
 
-clf = LinearSVC(random_state=42, tol=1e-3, max_iter=100000000)
-clf.fit(X_train, y_train)
 
+#clf = LinearSVC(random_state=42, tol=1e-3, max_iter=100000000)
+#clf = NuSVC(nu = 0.9999999)
+clf = SVC(kernel='poly', degree=3, gamma='auto')
+
+clf.fit(X_train, y_train)
+ 
 preds = clf.predict(X_test)
 print(accuracy_score(y_test, preds))
                                                     
