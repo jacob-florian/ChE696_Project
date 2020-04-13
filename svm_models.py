@@ -9,8 +9,7 @@ import pandas as pd
 from sklearn.preprocessing import StandardScaler
 import numpy as np
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score
+from sklearn.model_selection import GridSearchCV
 
 
 DF = pd.read_csv('AB_data.csv', index_col=0)
@@ -36,34 +35,17 @@ lda = LDA(n_components=5)
 X_lda = StandardScaler().fit_transform(lda.fit(X, y).transform(X))
 
 ### TRAIN SVM CLASSIFIERS ON EACH X ###
-# SVM SISSO
-X_train, X_test, y_train, y_test = train_test_split(X_sisso, y, test_size=0.30, random_state=42)
-
 from sklearn.svm import SVC
-clf = SVC(kernel='poly', degree=2, gamma='auto')
-clf.fit(X_train, y_train)
-preds = clf.predict(X_test)
-print("SVM Trained on SISSO:")
-print(accuracy_score(y_test, preds))
 
-# SVM PCA
-X_train, X_test, y_train, y_test = train_test_split(X_pca, y, test_size=0.30, random_state=42)
-
-from sklearn.svm import SVC
-clf = SVC(kernel='poly', degree=2, gamma='auto')
-clf.fit(X_train, y_train)
-preds = clf.predict(X_test)
-print("SVM Trained on 10 PCs:")
-print(accuracy_score(y_test, preds))
-
-# SVM LDA
-X_train, X_test, y_train, y_test = train_test_split(X_lda, y, test_size=0.30, random_state=42)
-
-from sklearn.svm import SVC
-clf = SVC(kernel='poly', degree=2, gamma='auto')
-clf.fit(X_train, y_train)
-preds = clf.predict(X_test)
-print("SVM Trained on 6 LDA:")
-print(accuracy_score(y_test, preds))
-
+for X, feature_type in ((X_sisso, "SISSO"), (X_pca, "PCA"), (X_lda, "LDA")):
+    parameters = {'kernel':('linear', 'rbf'), 'C':np.arange(1,10,1), 'gamma':['auto', 'scale']}
+    svc = SVC()
+    clf = GridSearchCV(svc, parameters, cv=5)
+    clf.fit(X, y)
+    temp = clf.cv_results_
+    print("Best test score, " + feature_type + ":")
+    print(np.amax(clf.cv_results_.get("mean_test_score")))
  
+# SISSO params @ idx 25: {'C': 7, 'gamma': 'auto', 'kernel': 'rbf'}
+# PCA params @ idx 0: {'C': 1, 'gamma': 'auto', 'kernel': 'linear'}
+# LDA params @ idx 4: {'C': 1, 'gamma': 'scale', 'kernel': 'rbf'}
