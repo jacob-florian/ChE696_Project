@@ -19,7 +19,7 @@ x = DF.iloc[:, list(range(2, 58))]
 y = DF.iloc[:, 1]
 X = StandardScaler().fit_transform(x)
 
-components = np.arange(2,20,1)
+components = np.arange(2,16,1)
 test_scores = []
 train_scores = []
 
@@ -44,42 +44,25 @@ ax.plot(components, train_scores, label="Training")
 ax.set(xlabel='Number of Components', ylabel='Accuracy Score',
        title='PCA Analysis')
 ax.legend(loc='lower right',fontsize='x-large')
-fig.savefig("pca_analysis.png")
+fig.savefig("pca_analysis.pdf")
 
 
 pca = KernelPCA(n_components=2, kernel='linear')
 X_reduced = pca.fit_transform(X)
-   
 
-plt.figure(figsize=(10, 10))
-#plt.title("2-Component PCA, Linear Kernel", fontsize=14)
-plt.scatter(X_reduced[:, 0], X_reduced[:, 1], c=y, cmap=plt.cm.Set1)
-plt.xlabel("$PC_1$", fontsize=24)
-plt.ylabel("$PC_2$", fontsize=24, rotation=0)
-plt.savefig("pca.png")
 
-'''
-plt.figure(figsize=(10, 10))
-index = 0
-pc1 = X_reduced[:, 0]
-pc2 = X_reduced[:, 1]
+DF['pca1'] = X_reduced[:, 0]
+DF['pca2'] = X_reduced[:, 1]
 
-plt.scatter(pc1, pc2, c=y.to_numpy())
-
-for i in range(708):
-    plt.scatter(pc1[i], pc2[i], s=10)
- '''   
-    
-'''
+#trying to match jacob's plot
+plt.figure(figsize=(10, 10), dpi=100)
 for i in [1, 2, 3, 4, 5, 6, 7]:
 	index = DF.index[DF['Class'] == i].tolist()
-	x = X_reduced[index, 0]
-	y = X_reduced[index, 1]
-	plt.scatter(x, y, s=10)
+	x = DF.loc[index, 'pca1']
+	y = DF.loc[index, 'pca2']
+	plt.scatter(x, y, s=20)
 
-
-plt.legend(['Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5', 'Class 6', 'Class 7'])
-plt.xlabel('PC1')
-plt.ylabel('PC2')
-plt.show()
-'''
+#plt.legend(['CsCl', 'NaCl', 'ZnS', 'CuAu', 'TlI', 'FeB', 'NiAs'], loc='lower right', fontsize='x-large')
+plt.xlabel("$PC_1$", fontsize=24)
+plt.ylabel("$PC_2$", fontsize=24, rotation=0)
+plt.savefig("pca.pdf")
