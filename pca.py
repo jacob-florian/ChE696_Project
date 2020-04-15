@@ -44,17 +44,16 @@ ax.plot(components, train_scores, label="Training")
 ax.set(xlabel='Number of Components', ylabel='Accuracy Score',
        title='PCA Analysis')
 ax.legend(loc='lower right',fontsize='x-large')
-fig.savefig("pca_analysis.pdf")
+#fig.savefig("pca_analysis.pdf")
 
 
 pca = KernelPCA(n_components=2, kernel='linear')
 X_reduced = pca.fit_transform(X)
 
-
+### PLOTTING 
 DF['pca1'] = X_reduced[:, 0]
 DF['pca2'] = X_reduced[:, 1]
 
-#trying to match jacob's plot
 plt.figure(figsize=(10, 10), dpi=100)
 for i in [1, 2, 3, 4, 5, 6, 7]:
 	index = DF.index[DF['Class'] == i].tolist()
@@ -65,4 +64,9 @@ for i in [1, 2, 3, 4, 5, 6, 7]:
 #plt.legend(['CsCl', 'NaCl', 'ZnS', 'CuAu', 'TlI', 'FeB', 'NiAs'], loc='lower right', fontsize='x-large')
 plt.xlabel("$PC_1$", fontsize=24)
 plt.ylabel("$PC_2$", fontsize=24, rotation=0)
+plt.xticks(fontsize=18)
+plt.yticks(fontsize=18)
+plt.tight_layout()
 plt.savefig("pca.pdf")
+
+
