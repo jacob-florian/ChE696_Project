@@ -1,9 +1,10 @@
-# Kernel PCA
+# Kernel PCA and LDA Results (4 figures)
 
 import numpy as np
 import pandas as pd
 from sklearn.svm import SVC
 import matplotlib.pyplot as plt
+from matplotlib.ticker import MaxNLocator
 from sklearn.metrics import accuracy_score
 from sklearn.decomposition import KernelPCA
 from sklearn.preprocessing import StandardScaler
@@ -71,7 +72,7 @@ plt.savefig("two_pcs.png")
 
 ########################################################################
 ### LDA ANALYSIS FOR DIFFERENT N-COMPONENTS USING SVM ###
-components = np.arange(2,7,1)
+components = [2, 3, 4, 5, 6] #np.arange(2,7,1)
 test_scores = []
 train_scores = []
 y = DF['Class'].to_numpy()
@@ -90,8 +91,10 @@ for n in components:
     test_preds = clf.predict(X_test)
     test_scores.append(accuracy_score(y_test, test_preds))
 
-    
+
+
 fig, ax = plt.subplots(figsize=(6,4))
+ax.xaxis.set_major_locator(MaxNLocator(integer=True))
 ax.plot(components, test_scores, label="Validation")
 ax.plot(components, train_scores, label="Training")
 ax.set(xlabel='$Components$', ylabel='$Accuracy$')
