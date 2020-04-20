@@ -22,15 +22,15 @@ sisso1 = (abs((DF['Allred-Rochow EN']+DF['Atomic radius ratio'])-(DF['Allred-Roc
 sisso2 = (abs((DF['Allred-Rochow Mean EN']*DF['Zungerradius sum ratio']) - (DF['Martynov Ionic Character']/DF['Atomic radius ratio']))).to_numpy()
 X_sisso = StandardScaler().fit_transform(np.transpose(np.vstack((sisso1, sisso2))))
 
-### PCA COMPONENTS ###
+### 10 PCA COMPONENTS ###
 x = DF.iloc[:, list(range(2, 58))]
 X = StandardScaler().fit_transform(x)
 linear = KernelPCA(n_components=10, kernel="linear", random_state=42)
 X_pca = StandardScaler().fit_transform(linear.fit_transform(X))
 
-### LDA COMPONENTS ###
+### 5 LDA COMPONENTS ###
 y = DF['Class'].to_numpy()
-lda = LDA(n_components=4)
+lda = LDA(n_components=5)
 X_lda = StandardScaler().fit_transform(lda.fit(X, y).transform(X))
 
 ### FIND OPTIMAL SVM HYPERPARAMETERS FOR EACH REDUCED FEATURE SET ###
