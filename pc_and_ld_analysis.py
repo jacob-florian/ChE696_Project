@@ -55,7 +55,7 @@ X_reduced = pca.fit_transform(X)
 DF['pca1'] = X_reduced[:, 0]
 DF['pca2'] = X_reduced[:, 1]
 
-plt.figure(figsize=(5, 5), dpi=400)
+plt.figure(figsize=(6, 4), dpi=400)
 for i in [1, 2, 3, 4, 5, 6, 7]:
 	index = DF.index[DF['Class'] == i].tolist()
 	x = DF.loc[index, 'pca1']
@@ -72,7 +72,7 @@ plt.savefig("two_pcs.png")
 
 ########################################################################
 ### LDA ANALYSIS FOR DIFFERENT N-COMPONENTS USING SVM ###
-components = [2, 3, 4, 5, 6] #np.arange(2,7,1)
+components = [1, 2, 3, 4, 5, 6] #np.arange(2,7,1)
 test_scores = []
 train_scores = []
 y = DF['Class'].to_numpy()
@@ -80,7 +80,7 @@ y = DF['Class'].to_numpy()
 for n in components:
     lda = LDA(n_components=n)
     X_reduced = StandardScaler().fit_transform(lda.fit(X, y).transform(X))
-    X_train, X_test, y_train, y_test = train_test_split(X_reduced, y, test_size=0.20,random_state=42, stratify=y)
+    X_train, X_test, y_train, y_test = train_test_split(X_reduced, y, test_size=0.20,random_state=0, stratify=y)
     
     clf = SVC(kernel='rbf', gamma='auto')
     clf.fit(X_train, y_train)
@@ -109,7 +109,7 @@ X_lda = StandardScaler().fit_transform(lda.fit(X, y).transform(X))
 DF['lda1'] = X_lda[:, 0]
 DF['lda2'] = X_lda[:, 1]
 
-plt.figure(figsize=(5, 5), dpi=400)
+plt.figure(figsize=(6, 4), dpi=400)
 for i in [1, 2, 3, 4, 5, 6, 7]:
 	index = DF.index[DF['Class'] == i].tolist()
 	x = DF.loc[index, 'lda1']
