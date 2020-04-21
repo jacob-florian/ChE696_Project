@@ -54,15 +54,7 @@ for x in neighbours:
     X_train_lda = lda.fit_transform(X_train_std, y_train)
     X_test_lda = lda.fit_transform(X_test_std, y_test)
     
-    #Plot 2-D LDA
-    markers = ('s', 'x', 'o', '^', 'v','P','*')
-    #plt.scatter(X_train_lda[:, 0], X_train_lda[:, 1], c=y_train, cmap=plt.cm.Paired, marker=markers[0])
-    #plt.xlabel('LDA 1')
-    #plt.ylabel('LDA 2')
-    
-    #Declare empty arrays for accuracy and number of neigbours
-
-    
+   
     
     #KNN model training
     from sklearn.neighbors import KNeighborsClassifier
