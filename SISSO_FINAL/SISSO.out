@@ -1,0 +1,124 @@
+Version SISSO.3.0, June, 2019.
+================================================================================
+
+Reading data from train.dat ...
+Reading parameters from SISSO.in: 
+--------------------------------------------------------------------------------
+restarts ?     F
+descriptor dimension:        2
+property type:     2
+total number of properties:        1
+task_weighting:        1
+number of samples for each property:      462
+number of samples for the groups of the property   1:   257  205
+is constrained to be convex domain for the groups of property   1:     1    1
+boundary tolerance (width) for classification:   0.001000
+number of scalar features:       31
+times of applying the operator set for feature construction (rung of the feature space):        2
+max complexity (number of operators in a feature):        6
+number of dimension(unit)-type (for dimension analysis):        1
+dimension type for each primary feature: 
+  0.00
+  0.00
+  0.00
+  0.00
+  0.00
+  0.00
+  0.00
+  0.00
+  0.00
+  0.00
+  0.00
+  0.00
+  0.00
+  0.00
+  0.00
+  0.00
+  0.00
+  0.00
+  0.00
+  0.00
+  0.00
+  0.00
+  0.00
+  0.00
+  0.00
+  0.00
+  0.00
+  0.00
+  0.00
+  0.00
+  0.00
+lower bound of the max abs. data value for the selected features:     0.10000E-02
+upper bound of the max abs. data value for the selected features:     0.10000E+06
+Expected size of the SIS-selected (single) subspace :      300
+operator set for feature construction: (+)(-)(*)(/)(exp)(exp-)(^-1)(^2)(^3)(sqrt)(cbrt)(log)(|-|) 
+method for sparsification:  L0        
+number of the top ranked models to output:       10
+--------------------------------------------------------------------------------
+
+Feature Construction and Descriptor Identification (FCDI) starts ...
+
+iteration:   1
+--------------------------------------------------------------------------------
+FC starts ...
+Total number of features in the space phi00:             31
+Total number of features in the space phi01:           3092
+Total number of features in the space phi02:       25705571
+Size of the SIS-selected subspace from phi02:        300
+Wall-clock time (second) for this FC:          102.29
+FC done!
+
+DI starts ...
+total number of SIS-selected features from all iterations:        300
+L0 starts ...
+
+Model/descriptor for generating residual:
+================================================================================
+  1D descriptor (model): 
+Number of data in all overlap regions:       103
+Size of the overlap:        0.17550
+Note: >0, overlap-size; <0, distance (absolute value) between separated domains
+Actual number (without double counting) of data in all overlap regions:        103
+@@@descriptor: 
+                      1:[((Group_Number_difference/Crystal_radius_ratio)+(Group_number_sum-2xcrystal_radius_difference))]
+================================================================================
+Wall-clock time (second) for this DI:            0.05
+DI done!
+
+iteration:   2
+--------------------------------------------------------------------------------
+FC starts ...
+File containing the features to be rejected: feature_space/Uspace.name
+Total number of features in the space phi00:             31
+Total number of features in the space phi01:           3092
+Total number of features in the space phi02:       25705571
+Size of the SIS-selected subspace from phi02:        300
+Wall-clock time (second) for this FC:           64.57
+FC done!
+
+DI starts ...
+total number of SIS-selected features from all iterations:        600
+L0 starts ...
+
+Final model/descriptor to report
+================================================================================
+  2D descriptor (model): 
+Number of data in all overlap regions:         9
+Size of the overlap:        0.34139
+Note: >0, overlap-size; <0, distance (absolute value) between separated domains
+Actual number (without double counting) of data in all overlap regions:          9
+@@@descriptor: 
+                    202:[((Allred-Rochow_EN*Ionic_radius_ratio)+(Martynov-Batsanov_Mean_EN-Ionic_radius_ratio))]
+                    368:[((Allred-Rochow_EN*Group_number_sum)*(Atomic_radius_sum-Crystal_radius_sum))]
+================================================================================
+Wall-clock time (second) for this DI:          195.30
+DI done!
+
+FCDI done !
+
+--------------------------------------------------------------------------------
+Total wall-clock time (second):          362.98
+
+                                               Have a nice day !    
+
